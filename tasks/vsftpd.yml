@@ -1,0 +1,11 @@
+---
+
+- name: Install package
+  apt: name=vsftpd
+
+- name: Configure service
+  template: src=vsftpd.conf.j2 dest=/etc/vsftpd.conf
+  notify: restart vsftpd
+
+- name: Enable service
+  service: name=vsftpd enabled=yes

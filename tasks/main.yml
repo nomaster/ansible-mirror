@@ -1,0 +1,27 @@
+---
+
+- name: Create mirror group
+  group: name=mirror system=yes state=present
+
+- name: Create mirror user
+  user: name=mirror group=mirror home=/home/mirror state=present
+
+- name: Create mirror directories
+  file: path=/home/mirror/{{ item }} owner=mirror group=mirror state=directory
+  with_items:
+  - archlinux
+  - centos
+
+- name: Configure Debian testing repo
+  apt_repository: repo='deb http://cloudfront.debian.net/debian testing main' state=present
+  register: repo
+
+- name: Update apt cache
+  apt: update_cache=yes
+  when: repo | changed
+
+- include: mirror.yml
+- include: letsencrypt.yml
+- include: nginx.yml
+- include: rsyncd.yml
+- include: vsftpd.yml

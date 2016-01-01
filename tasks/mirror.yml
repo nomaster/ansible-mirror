@@ -1,0 +1,14 @@
+---
+
+- name: Configure mirror service
+  copy: src=mirror.service dest=/etc/systemd/system/
+  notify: reload daemons
+
+- name: Configure mirror timer
+  copy: src=mirror.timer dest=/etc/systemd/system/
+  notify:
+  - reload daemons
+  - restart mirror
+
+- name: Enable mirror timer
+  service: name=mirror.timer enabled=yes

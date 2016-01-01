@@ -1,0 +1,13 @@
+---
+
+- name: reload nginx
+  service: name=nginx state=reloaded
+
+- name: restart vsftpd
+  service: name=vsftpd state=restarted
+
+- name: restart rsyncd
+  service: name=rsync state=restarted
+
+- name: reload daemons
+  command: systemctl daemon-reload

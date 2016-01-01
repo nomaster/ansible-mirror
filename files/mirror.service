@@ -1,0 +1,9 @@
+[Unit]
+Description=Mirror Service
+After=network.target
+
+[Service]
+User=mirror
+Type=oneshot
+ExecStart=/usr/bin/rsync -qrtlH --delete-after --delay-updates --safe-links --max-delete=1000 rsync://ftp5.gwdg.de/pub/linux/archlinux/ /home/mirror/archlinux/
+ExecStart=/usr/bin/rsync -qaH --delete --delay-updates mirror.eu.oneandone.net::centos/ /home/mirror/centos/

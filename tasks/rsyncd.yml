@@ -1,0 +1,11 @@
+---
+
+- name: Install package
+  apt: name=rsync state=present
+
+- name: Configures service
+  template: src=rsyncd.conf.j2 dest=/etc/rsyncd.conf
+  notify: restart rsyncd
+
+- name: Enable service
+  service: name=rsync enabled=yes

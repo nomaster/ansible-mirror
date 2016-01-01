@@ -1,0 +1,9 @@
+---
+
+- name: Install package
+  apt: name=letsencrypt state=present default_release=testing
+
+- name: Generate certificates
+  command: /usr/bin/letsencrypt certonly --agree-tos --email webmaster@{{ ansible_domain }} --domains mirror.{{ ansible_domain }}
+  args:
+    creates: /etc/letsencrypt/renewal/mirror.{{ ansible_domain }}.conf
